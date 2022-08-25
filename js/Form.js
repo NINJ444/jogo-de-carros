@@ -31,12 +31,18 @@ class Form {
     this.setElementsStyle();
     this.bemvindo();
   }
+
   bemvindo(){
     this.playButton.mousePressed(()=>{
       this.playButton.hide();
       this.input.hide();
     var Mensagem=` ola ${this.input.value()}</br>espere o outro jogador entrar`;
     this.greeting.html(Mensagem);
+    playerCount += 1;
+    player.name = this.input.value();
+    player.index = playerCount;
+    player.addPlayer();
+    player.updateCount(playerCount);
     })
   }
 }
