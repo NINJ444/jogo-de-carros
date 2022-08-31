@@ -38,4 +38,21 @@ addPlayer(){
   });
 }
 
+//traz as informações dos dois players do banco de dados
+static getPlayersInfo(){
+  var playerInfoRef = database.ref("players");
+  playerInfoRef.on("value", data => {
+    allPlayers = data.val();
+  });
+}
+
+//atualizar a posição do player no banco de dados
+update(){
+  var playerIndex = "players/player" + this.index;
+  database.ref(playerIndex).update({
+    positionX: this.positionX,
+    positionY: this.positionY,
+  });
+}
+
 }//classe

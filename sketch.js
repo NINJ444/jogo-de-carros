@@ -8,12 +8,13 @@ var gameState;
 var carro1,carro2,carro1img,carro2img;
 var pistaimg;
 var carros;
+var allPlayers;
 
 function preload() {
   backgroundImage = loadImage("./assets/planodefundo.png");
   carro1img = loadImage("./assets/car1.png");
   carro2img = loadImage("./assets/car2.png");
-  pistaimg = loadImage("./assets/PISTA.png");
+  pistaimg = loadImage("./assets/track.jpg");
 }
 
 function setup() {
