@@ -42,6 +42,14 @@ class Game {
 
         carros[index-1].position.x = x;
         carros[index-1].position.y = y;
+        //marcando o carro
+        if(index==player.index){
+        fill ("red")
+        stroke(10)
+        ellipse(x,y,60)
+        //camera
+        camera.position.y=carros[index-1].position.y;
+        }
       }
       this.playerControl();
       drawSprites();

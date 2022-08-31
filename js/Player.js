@@ -54,5 +54,15 @@ update(){
     positionY: this.positionY,
   });
 }
+//pegar a distancia dos carros do banco de dados
+distancia(){
+var playerDistanceRef = database.ref("players/player"+ this.index);
+playerDistanceRef.on("value",data => {
+  var data = data.val();
+  this.positionX=data.positionX;
+  this.positionY=data.positionY;
+});
+}
+  
 
 }//classe
