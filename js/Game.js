@@ -1,5 +1,14 @@
 class Game {
-  constructor() {}
+  constructor() {
+    //botão de reset
+    this.resetTitle = createElement("h2");
+    this.resetButton = createButton("");
+    //placar
+    this.placar = createElement("h2");
+    this.lider1 = createElement("h2");
+    this.lider2 = createElement("h2");
+
+  }
 
   start() {
     form = new Form();
@@ -19,18 +28,42 @@ class Game {
   //transição das telas
   transicaoDeTelas(){
     form.hide();
+    //título do jogo
     form.titleImg.position(40,50);
     form.titleImg.class("gameTitleAfterEffect");
+    //título do botão de reset
+    this.resetTitle.position(width/2 + 230, 40);
+    this.resetTitle.class("resetText");
+    this.resetTitle.html("Reiniciar Jogo");
+    //botão de reset
+    this.resetButton.position(width/2 + 230, 100);
+    this.resetButton.class("resetButton");
+    //placar
+    this.placar.position(width/3 - 40, 40);
+    this.placar.class("leadersText");
+    this.placar.html("Placar");
+
+    this.lider1.position(width/3 - 40, 80);
+    this.lider1.class("leadersText");
+
+    this.lider2.position(width/3 - 40, 130);
+    this.lider2.class("leadersText");
+
   }
 
   //jogo começou
   play(){
     //muda a tela para a tela do jogo
     this.transicaoDeTelas();
+    //chamada da função para resetar o banco de dados
+    this.botaoReset();
     //chamada da função estática pela classe
     Player.getPlayersInfo();
     if(allPlayers != undefined){
       image(pistaimg, 0, -height-5, width, height*6);
+
+      //mostrar placar
+      this.mostrarPlacar();
 
       //ver as informações de cada carro (posição)
       var index = 0;
@@ -76,6 +109,50 @@ class Game {
     database.ref("/").update({
       gameState: state,
     })
+  }
+
+  botaoReset(){
+    //resetar o banco de dados
+  }
+
+  //placar
+  mostrarPlacar(){
+    var lider1, lider2;
+    var players = Object.values(allPlayers);
+    if((players[0].rank ===0 && players[1].rank === 0) || players[0].rank === 1){
+      lider1 = 
+      players[0].rank +
+      "&emsp;" + 
+      players[0].name +
+      "&emsp;" + 
+      players[0].score;
+
+      lider2 = 
+      players[1].rank +
+      "&emsp;" + 
+      players[1].name +
+      "&emsp;" + 
+      players[1].score;
+    }
+
+    if(players[1].rank === 1){
+      lider1 = 
+      players[1].rank +
+      "&emsp;" + 
+      players[1].name +
+      "&emsp;" + 
+      players[1].score;
+
+      lider2 = 
+      players[0].rank +
+      "&emsp;" + 
+      players[0].name +
+      "&emsp;" + 
+      players[0].score;
+    }
+
+    this.lider1.html(lider1);
+    this.lider2.html(lider2);
   }
 
 }//classe

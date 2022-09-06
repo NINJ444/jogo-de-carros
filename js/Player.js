@@ -4,6 +4,8 @@ class Player {
     this.index = null;
     this.positionX = 0;
     this.positionY = 0;
+    this.rank = 0;
+    this.score = 0;
   }
 
 
@@ -35,6 +37,8 @@ addPlayer(){
     name: this.name,
     positionX: this.positionX,
     positionY: this.positionY,
+    rank: this.rank,
+    score: this.score,
   });
 }
 
@@ -52,6 +56,8 @@ update(){
   database.ref(playerIndex).update({
     positionX: this.positionX,
     positionY: this.positionY,
+    rank: this.rank,
+    score: this.score,
   });
 }
 //pegar a distancia dos carros do banco de dados
