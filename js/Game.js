@@ -95,6 +95,16 @@ class Game {
       player.positionY += 10;
       player.update();
     }
+    if(keyIsDown(LEFT_ARROW)&&player.positionX>width/3-50){
+      player.positionX -= 10;
+      player.update();
+      
+    }
+    if(keyIsDown(RIGHT_ARROW)&&player.positionX<width/2+300){
+      player.positionX += 10;
+      player.update();
+    }
+  
   }
 
   //pegar o estado do jogo do BD
@@ -113,6 +123,14 @@ class Game {
 
   botaoReset(){
     //resetar o banco de dados
+    this.resetButton.mousePressed(()=>{
+    database.ref("/").set({
+      gameState:0,
+      playerCount:0,
+      players:{}
+    });
+    window.location.reload();
+    });   
   }
 
   //placar
