@@ -48,6 +48,7 @@ class Game {
     //chamada da função para criar os sprites
     this.addSprites(gCoins,20,coinimg,0.09);
     this.addSprites(gFuels,10,fuelimg,0.02);
+    this.addSprites(gObstacles,obstaclesPositions.length,obstacle1Image,0.04,obstaclesPositions);
   }
 
   //transição das telas
@@ -105,6 +106,7 @@ class Game {
         fill ("red")
         stroke(10)
         ellipse(x,y,60)
+        this.coletarComb(index);
         //camera
         camera.position.y=carros[index-1].position.y;
         }
@@ -199,12 +201,19 @@ class Game {
   }
 
   //criação dos sprites de moeda, combustível e obstáculos
-  addSprites(spriteGroup, numberOfSprites, spriteImage, scale){
+  addSprites(spriteGroup, numberOfSprites, spriteImage, scale,matriz=[]){
     for(var i=0; i<numberOfSprites; i++){
       var x,y;
-
+     if(matriz.length>0){
+      x=matriz[i].x
+      y=matriz[i].y
+      spriteImage=matriz[i].image
+     }
+     else{
       x = random(width/2 - 150, width/2 + 150);
       y = random(-height*4.5, height - 400);
+     }
+
 
       var sprite = createSprite(x,y);
       sprite.addImage("sprite", spriteImage);
@@ -214,5 +223,10 @@ class Game {
       spriteGroup.add(sprite);
     }
   }
-
+  //coletando cobustiveis
+  coletarComb(i){
+   carros[i-1].overlap(gFuels,function(collector,collected){
+    collected.remove();
+   });
+  }
 }//classe
