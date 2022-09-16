@@ -9,12 +9,18 @@ var carro1,carro2,carro1img,carro2img;
 var pistaimg;
 var carros;
 var allPlayers;
+var gFuels, gCoins, gObstacles;
+var fuelimg, coinimg, obstacle1Image, obstacle2Image;
 
 function preload() {
   backgroundImage = loadImage("./assets/planodefundo.png");
   carro1img = loadImage("./assets/car1.png");
   carro2img = loadImage("./assets/car2.png");
   pistaimg = loadImage("./assets/track.jpg");
+  fuelimg = loadImage("./assets/fuel.png");
+  coinimg = loadImage("./assets/goldCoin.png");
+  obstacle1Image = loadImage("./assets/obstacle1.png");
+  obstacle2Image = loadImage("./assets/obstacle2.png");
 }
 
 function setup() {

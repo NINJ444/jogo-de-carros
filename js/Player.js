@@ -6,6 +6,7 @@ class Player {
     this.positionY = 0;
     this.rank = 0;
     this.score = 0;
+    this.fuel = 185;
   }
 
 
@@ -39,6 +40,7 @@ addPlayer(){
     positionY: this.positionY,
     rank: this.rank,
     score: this.score,
+    fuel: this.fuel,
   });
 }
 
@@ -58,6 +60,7 @@ update(){
     positionY: this.positionY,
     rank: this.rank,
     score: this.score,
+    fuel: this.fuel,
   });
 }
 //pegar a distancia dos carros do banco de dados
