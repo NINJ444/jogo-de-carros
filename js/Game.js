@@ -7,6 +7,7 @@ class Game {
     this.placar = createElement("h2");
     this.lider1 = createElement("h2");
     this.lider2 = createElement("h2");
+    this.andando = false
 
   }
 
@@ -93,6 +94,8 @@ class Game {
 
       //mostrar barra de vida
       this.showLife();
+      //mostrar barra combustivel
+      this.showComb();
       
       //mostrar placar
       this.mostrarPlacar();
@@ -137,6 +140,7 @@ class Game {
     if(keyIsDown(UP_ARROW)){
       player.positionY += 10;
       player.update();
+      this.andando = true;
     }
     if(keyIsDown(LEFT_ARROW)&&player.positionX>width/3-50){
       player.positionX -= 10;
@@ -243,9 +247,16 @@ class Game {
   //coletando cobustiveis
   coletarComb(i){
    carros[i-1].overlap(gFuels,function(collector,collected){
-    player.fuel +=10;
+    player.fuel +=180;
     collected.remove();
    });
+   if(player.fuel>0 && this.andando){
+   player.fuel-=1
+   }
+   if(player.fuel <=0){
+   gameState =2;
+   //this.gameOver()
+   }
   }
 
   //coletando moedas
@@ -264,6 +275,17 @@ class Game {
     rect(width/2-100, height - player.positionY - 400,185,20);
     fill("red");
     rect(width/2-100, height - player.positionY - 400,player.life,20);
+    noStroke();
+    pop();
+   }
+   //barra do combustivel
+   showComb(){
+    push();
+    image(fuelimg,width/2-150, height - player.positionY - 300, 20, 20);
+    fill("white");
+    rect(width/2-100, height - player.positionY - 300,185,20);
+    fill("brown");
+    rect(width/2-100, height - player.positionY - 300,player.fuel,20);
     noStroke();
     pop();
    }
