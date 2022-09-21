@@ -7,6 +7,7 @@ class Player {
     this.rank = 0;
     this.score = 0;
     this.fuel = 185;
+    this.life = 185;
   }
 
 
@@ -41,6 +42,7 @@ addPlayer(){
     rank: this.rank,
     score: this.score,
     fuel: this.fuel,
+    life: this.life,
   });
 }
 
@@ -61,6 +63,7 @@ update(){
     rank: this.rank,
     score: this.score,
     fuel: this.fuel,
+    life: this.life,
   });
 }
 //pegar a distancia dos carros do banco de dados
@@ -72,6 +75,18 @@ playerDistanceRef.on("value",data => {
   this.positionY=data.positionY;
 });
 }
-  
+
+//pegar do banco de dados quantos carros passaram da linha de chegada
+getCarsAtEnd(){
+  database.ref('carsAtEnd').on("value",(data)=>{
+    this.rank = data.val();
+  });
+}
+
+static updateCarsAtEnd(rank){
+  database.ref("/").update({
+    carsAtEnd: rank
+  });
+}
 
 }//classe

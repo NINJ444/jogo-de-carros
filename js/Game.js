@@ -85,9 +85,15 @@ class Game {
     this.botaoReset();
     //chamada da função estática pela classe
     Player.getPlayersInfo();
-    if(allPlayers != undefined){
-      image(pistaimg, 0, -height-5, width, height*6);
+    //chamada da função para saber quantos jogadores cruzaram a linha de chegada
+    player.getCarsAtEnd();
 
+    if(allPlayers != undefined){
+      image(pistaimg, 0, -height*5, width, height*6);
+
+      //mostrar barra de vida
+      this.showLife();
+      
       //mostrar placar
       this.mostrarPlacar();
 
@@ -107,11 +113,21 @@ class Game {
         stroke(10)
         ellipse(x,y,60)
         this.coletarComb(index);
+        this.coletarMoedas(index);
         //camera
         camera.position.y=carros[index-1].position.y;
         }
       }
       this.playerControl();
+
+      const linhaChegada = height*6 - 100;
+      if(player.positionY > linhaChegada){
+        gameState = 2;
+        player.rank += 1;
+        Player.updateCarsAtEnd();
+        player.update();
+        this.showRank();
+      }
       drawSprites();
     }
   }
@@ -152,6 +168,7 @@ class Game {
     //resetar o banco de dados
     this.resetButton.mousePressed(()=>{
     database.ref("/").set({
+      carsAtEnd:0,
       gameState:0,
       playerCount:0,
       players:{}
@@ -226,7 +243,42 @@ class Game {
   //coletando cobustiveis
   coletarComb(i){
    carros[i-1].overlap(gFuels,function(collector,collected){
+    player.fuel +=10;
     collected.remove();
    });
   }
+
+  //coletando moedas
+  coletarMoedas(i){
+    carros[i-1].overlap(gCoins,function(collector,collected){
+      player.score += 10;
+     collected.remove();
+    });
+   }
+
+   //barra de vida
+   showLife(){
+    push();
+    image(lifeimg,width/2-150, height - player.positionY - 400, 20, 20);
+    fill("white");
+    rect(width/2-100, height - player.positionY - 400,185,20);
+    fill("red");
+    rect(width/2-100, height - player.positionY - 400,player.life,20);
+    noStroke();
+    pop();
+   }
+
+   //mostrar que o player terminou a corrida
+   showRank(){
+    swal({
+      title: `Incrível! ${"\n"}Rank${"\n"}${player.rank}`,
+      text: "Você alcançou a linha de chegada com sucesso!",
+      imageUrl: 
+      "https://raw.githubusercontent.com/vishalgaddam873/p5-multiplayer-car-race-game/master/assets/cup.png",
+      imageSize: "100x100",
+      confirmButtonText: "Ok",
+    });
+   }
+
+   //"https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
 }//classe
