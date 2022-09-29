@@ -7,7 +7,8 @@ class Game {
     this.placar = createElement("h2");
     this.lider1 = createElement("h2");
     this.lider2 = createElement("h2");
-    this.andando = false
+    this.andando = false;
+    this.setaEsquerda = false;
 
   }
 
@@ -110,15 +111,19 @@ class Game {
 
         carros[index-1].position.x = x;
         carros[index-1].position.y = y;
-        //marcando o carro
+        //marcando o carro pelo índice
         if(index==player.index){
         fill ("red")
         stroke(10)
         ellipse(x,y,60)
         this.coletarComb(index);
         this.coletarMoedas(index);
+        this.colisaoObstaculos(index);
+        
+
         //camera
         camera.position.y=carros[index-1].position.y;
+
         }
       }
       this.playerControl();
@@ -127,7 +132,7 @@ class Game {
       if(player.positionY > linhaChegada){
         gameState = 2;
         player.rank += 1;
-        Player.updateCarsAtEnd();
+        Player.updateCarsAtEnd(player.rank);
         player.update();
         this.showRank();
       }
@@ -145,13 +150,13 @@ class Game {
     if(keyIsDown(LEFT_ARROW)&&player.positionX>width/3-50){
       player.positionX -= 10;
       player.update();
-      
+      this.setaEsquerda = true;
     }
     if(keyIsDown(RIGHT_ARROW)&&player.positionX<width/2+300){
       player.positionX += 10;
       player.update();
+      this.setaEsquerda = false;
     }
-  
   }
 
   //pegar o estado do jogo do BD
@@ -244,14 +249,15 @@ class Game {
       spriteGroup.add(sprite);
     }
   }
+
   //coletando cobustiveis
   coletarComb(i){
    carros[i-1].overlap(gFuels,function(collector,collected){
-    player.fuel +=180;
+    player.fuel +=185/4;
     collected.remove();
    });
    if(player.fuel>0 && this.andando){
-   player.fuel-=1
+      player.fuel-=0.5;
    }
    if(player.fuel <=0){
    gameState =2;
@@ -290,6 +296,21 @@ class Game {
     pop();
    }
 
+   //colisão com obstáculos
+   colisaoObstaculos(index){
+    if(carros[index-1].collide(gObstacles)){
+      if(this.setaEsquerda){
+        player.positionX += 100;
+      }else{
+        player.positionX -= 100;
+      }
+      if(player.life > 0){
+        player.life -= 185/4;
+      }
+      player.update();
+    }
+   }
+
    //mostrar que o player terminou a corrida
    showRank(){
     swal({
@@ -301,6 +322,9 @@ class Game {
       confirmButtonText: "Ok",
     });
    }
+    //mostrar que o player não terminou a corrida
+    //gameOver(){
 
+   // }
    //"https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
 }//classe

@@ -78,7 +78,7 @@ playerDistanceRef.on("value",data => {
 
 //pegar do banco de dados quantos carros passaram da linha de chegada
 getCarsAtEnd(){
-  database.ref('carsAtEnd').on("value",(data)=>{
+  database.ref("carsAtEnd").on("value",data=>{
     this.rank = data.val();
   });
 }
