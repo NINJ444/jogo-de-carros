@@ -11,6 +11,7 @@ var carros;
 var allPlayers;
 var gFuels, gCoins, gObstacles;
 var fuelimg, coinimg, obstacle1Image, obstacle2Image, lifeimg;
+var explosaodocarro;
 
 function preload() {
   backgroundImage = loadImage("./assets/planodefundo.png");
@@ -22,6 +23,7 @@ function preload() {
   coinimg = loadImage("./assets/goldCoin.png");
   obstacle1Image = loadImage("./assets/obstacle1.png");
   obstacle2Image = loadImage("./assets/obstacle2.png");
+  explosaodocarro = loadImage("./assets/blast.png");
 }
 
 function setup() {

@@ -25,7 +25,8 @@ class Game {
     carro2.scale=0.07;
     carros=[carro1,carro2];
     //matriz  0       1
-
+    carro1.addImage("bomm",explosaodocarro);
+    carro2.addImage("bomm",explosaodocarro);
     //grupos de sprites
     gFuels = new Group();
     gCoins = new Group();
@@ -111,6 +112,11 @@ class Game {
 
         carros[index-1].position.x = x;
         carros[index-1].position.y = y;
+        var vidaatual=allPlayers[plr].life;
+        if(vidaatual<=0){
+        carros[index-1].changeImage("bomm")
+        carros[index-1].scale=0.3;
+        }
         //marcando o carro pelo índice
         if(index==player.index){
         fill ("red")
@@ -261,7 +267,7 @@ class Game {
    }
    if(player.fuel <=0){
    gameState =2;
-   //this.gameOver()
+   this.gameOver()
    }
   }
 
@@ -276,11 +282,11 @@ class Game {
    //barra de vida
    showLife(){
     push();
-    image(lifeimg,width/2-150, height - player.positionY - 400, 20, 20);
+    image(lifeimg,width/2-150, height - player.positionY - 100, 20, 20);
     fill("white");
-    rect(width/2-100, height - player.positionY - 400,185,20);
+    rect(width/2-100, height - player.positionY - 100,185,20);
     fill("red");
-    rect(width/2-100, height - player.positionY - 400,player.life,20);
+    rect(width/2-100, height - player.positionY - 100,player.life,20);
     noStroke();
     pop();
    }
@@ -323,8 +329,15 @@ class Game {
     });
    }
     //mostrar que o player não terminou a corrida
-    //gameOver(){
-
-   // }
-   //"https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
-}//classe
+    gameOver(){
+      swal({
+        title: `fim de jogo!`,
+        text: "seu combustivel acabou!",
+        imageUrl: 
+        "https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
+        imageSize: "100x100",
+        confirmButtonText: "Ok",
+      });
+    }
+}
+//classe
